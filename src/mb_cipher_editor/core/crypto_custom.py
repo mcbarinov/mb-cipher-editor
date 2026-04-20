@@ -1,8 +1,11 @@
-"""Password-based file encryption.
+"""Password-based file encryption — custom MBCE format.
 
-Implements the format specified in ``docs/cryptography.md``. The code here
-MUST match that document exactly. If the format changes, bump ``VERSION``
-and update both the spec and this module together.
+Implements the format specified in ``docs/cryptography_custom.md``. The code
+here MUST match that document exactly. If the format changes, bump
+``VERSION`` and update both the spec and this module together.
+
+Alternative variants available for comparison: ``core.crypto_age`` (age v1),
+``core.crypto_scrypt`` (Tarsnap scrypt(1) format).
 """
 
 import os
@@ -23,7 +26,7 @@ DEFAULT_LOG_N = 17  # scrypt N = 2^17 = 131072; ~100ms, ~128 MiB on a modern CPU
 DEFAULT_R = 8  # scrypt block size parameter
 DEFAULT_P = 1  # scrypt parallelism parameter
 
-# Sanity caps on KDF params (see docs/cryptography.md § "Parameter caps").
+# Sanity caps on KDF params (see docs/cryptography_custom.md § "Parameter caps").
 # Bounds are enforced on both encrypt and decrypt to keep "any failure is a single
 # error type" honest and to prevent a hostile file from forcing a scrypt memory bomb.
 MIN_LOG_N = 10
@@ -88,7 +91,7 @@ def decrypt(blob: bytes, password: str) -> bytes:
 
 
 def _check_kdf_params(log_n: int, r: int, p: int) -> None:
-    """Reject KDF params outside the caps documented in docs/cryptography.md."""
+    """Reject KDF params outside the caps documented in docs/cryptography_custom.md."""
     if not MIN_LOG_N <= log_n <= MAX_LOG_N:
         raise ValueError(f"log_n must be in [{MIN_LOG_N}, {MAX_LOG_N}]: got {log_n}")
     if not MIN_R <= r <= MAX_R:

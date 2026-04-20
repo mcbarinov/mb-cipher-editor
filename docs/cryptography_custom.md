@@ -1,6 +1,8 @@
-# Cryptography
+# Cryptography — custom MBCE format (variant)
 
-This document is the **source of truth** for how `mb-cipher-editor` encrypts files. The code in `core/crypto.py` must match this spec exactly. If the spec changes, bump the format version and update both this document and the code together.
+> **Status:** one of several variants being prototyped side-by-side. See also `cryptography_age.md` (age v1) and `cryptography_scrypt.md` (Tarsnap scrypt(1)) once a final format is chosen.
+
+This document is the **source of truth** for the MBCE variant. The code in `core/crypto_custom.py` must match this spec exactly. If the spec changes, bump the format version and update both this document and the code together.
 
 ## Goals
 

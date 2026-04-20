@@ -1,4 +1,4 @@
-"""Tests for core.crypto.
+"""Tests for core.crypto_custom.
 
 Uses a cheap scrypt cost (log_n=10, the documented minimum) everywhere to keep
 the suite fast. Production default is DEFAULT_LOG_N = 17.
@@ -6,8 +6,8 @@ the suite fast. Production default is DEFAULT_LOG_N = 17.
 
 import pytest
 
-from mb_cipher_editor.core import crypto
-from mb_cipher_editor.core.crypto import (
+from mb_cipher_editor.core import crypto_custom as crypto
+from mb_cipher_editor.core.crypto_custom import (
     _HEADER_STRUCT,
     HEADER_SIZE,
     MAGIC,
@@ -56,7 +56,7 @@ class TestRoundTrip:
 
 
 class TestHeader:
-    """Header layout matches docs/cryptography.md."""
+    """Header layout matches docs/cryptography_custom.md."""
 
     def test_magic_and_version(self) -> None:
         """Header starts with MBCE + version byte."""
@@ -207,7 +207,7 @@ class TestDefaults:
         assert crypto.DEFAULT_P == 1
 
     def test_param_caps(self) -> None:
-        """Parameter caps match docs/cryptography.md."""
+        """Parameter caps match docs/cryptography_custom.md."""
         assert crypto.MIN_LOG_N == 10
         assert crypto.MAX_LOG_N == 20
         assert crypto.MIN_R == 1
