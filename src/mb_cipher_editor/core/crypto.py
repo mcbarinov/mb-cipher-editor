@@ -1,16 +1,15 @@
 """Password-based file encryption — Tarsnap ``scrypt(1)`` format.
 
-Implements the file layout specified in ``docs/cryptography_scrypt.md``,
-which mirrors the reference format at
-https://github.com/Tarsnap/scrypt/blob/master/FORMAT.
+Implements the file layout specified in ``docs/crypto.md``, which mirrors
+the reference format at https://github.com/Tarsnap/scrypt/blob/master/FORMAT.
 
 Files produced here are decryptable by ``scrypt dec file`` on any platform
 where the `scrypt` CLI is installed; files produced by ``scrypt enc`` are
 decryptable here. The code MUST match that spec exactly — if the spec
 changes, update both together.
 
-Alternative variants available for comparison: ``core.crypto_custom`` (MBCE),
-``core.crypto_age`` (age v1).
+``docs/crypto.md`` also records why this format was chosen over the
+alternatives (custom, age v1, JWE).
 """
 
 import hashlib
@@ -21,7 +20,7 @@ import struct
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
 
-# Format constants (see spec in docs/cryptography_scrypt.md).
+# Format constants (see spec in docs/crypto.md).
 MAGIC = b"scrypt"  # 6-byte file signature
 VERSION = 0  # Current (and only) format version
 
@@ -138,7 +137,7 @@ def _derive_keys(password: str, salt: bytes, log_n: int, r: int, p: int) -> tupl
 
 
 def _check_kdf_params(log_n: int, r: int, p: int) -> None:
-    """Reject KDF params outside the caps documented in docs/cryptography_scrypt.md."""
+    """Reject KDF params outside the caps documented in docs/crypto.md."""
     if not MIN_LOG_N <= log_n <= MAX_LOG_N:
         raise ValueError(f"log_n must be in [{MIN_LOG_N}, {MAX_LOG_N}]: got {log_n}")
     if not MIN_R <= r <= MAX_R:
