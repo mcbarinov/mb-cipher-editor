@@ -1,0 +1,14 @@
+.idea
+.venv
+.env
+.coverage
+/htmlcov
+__pycache__
+*.egg-info
+pip-wheel-metadata
+.pytest_cache
+.mypy_cache
+.ruff_cache
+/dist
+/build
+/tmp
